@@ -1,0 +1,287 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Info</title>
+    <link href="{% static 'mystyle.css' %}" rel="stylesheet">
+    {% csrf_token %}
+</head>
+<style>
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column {
+    flex: 1; /* Adjust the width as needed */
+
+}
+.container{
+    margin:10px;
+    padding:20px;
+    border-radius:8px;
+    background-color: rgb(235,233,233);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+    #script-container {
+        max-width: 400px;
+        margin: 50px;
+        padding: 20px;
+        
+        background-color: #e22323;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #333;
+    }
+
+    .dropdown1 {
+        text-align: center; /* Center the content horizontally */
+        margin-top: 20px; /* Add some top margin */
+    }
+
+    .dropdown1 select {
+        width: 200px; /* Set the width of the dropdown */
+        height: 40px; /* Set the height of the dropdown */
+        font-size: 18px; /* Set the font size of the dropdown */
+    }
+     nav {
+            background-color: #65818b;
+            overflow: hidden;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            background-color: #485b66;
+        }
+        
+    
+        table,th,td{
+            border-collapse: collapse;
+        }
+        label{
+            color:#485b66;
+            font-size: 20px;
+        }
+        nav .registration {
+            background-color: white;
+            color: #65818b;
+        }
+        .dropdown {
+            float: right;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color:white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color:white;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .admin-info {
+            display: flex; /* Add flex display */
+            align-items: center; /* Center items vertically */
+        }
+        #script-container {
+        text-align: center; /* Center the content horizontally */
+        }
+
+        .student-id {
+            color: white;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            background-color: #65818b;
+            color: white;
+            padding: 3px 3px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #485b66;
+        }
+        body {
+            background-image: url("static/images/bg4.jpg");
+            background-size: cover;
+            background-position: center;
+        }   
+        .review-forms-container {
+    display: flex;
+    justify-content: space-between; /* Adjust alignment as needed */
+}
+
+
+
+</style>
+<body>
+    <form action="registration" method="POST">
+        {% csrf_token %}
+        <nav>
+            <a class="registration" href="{% url 'registration' %}">Register</a>
+            <a href="{% url 'login_stu' %}">Login</a>
+            <div class="dropdown">
+                <button class="dropbtn">Reports</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'final_report' %}">Final Report</a>
+                    <a href="{% url 'final_report_fac' %}">Entire report</a>
+                    
+                </div>
+            </div>
+        </nav>
+
+        <table align="center">
+            <tr>
+                <td>
+                    <label for="team_id">Team ID:</label>
+                </td>
+                <td>
+                    <input type="text" name="team_id" id="team_id" style="width:300px;height:25px;font-size:15px" placeholder="Enter Team ID">
+                </td>
+                <td>
+                    <input type="submit" id="submit" name="submit" value="Submit" style="background-color: #485b66; font-size: 18px; ">
+
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <br>
+
+    <table align="center" style="width: 40%; border-collapse: separate; border-spacing: 0 8px; border: 2px solid #ddd; border-radius: 10px;">
+    {% for x in freports %}
+    <tr style="border-radius: 10px;">
+        <td style="padding: 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #ddd; background-color: #f2f2f2;">Team ID</td>
+        <td style="padding: 8px; border-bottom: 2px solid #ddd; background-color: #ffffff;">{{ x.team_id }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #ddd; background-color: #ffffff;">Team Members</td>
+        <td style="padding: 8px; border-bottom: 2px solid #ddd; background-color: #f2f2f2;">{{ x.team_members }}</td>
+    </tr>
+    <tr style="border-radius: 10px;">
+        <td style="padding: 8px; text-align: left; font-weight: bold; border-bottom: 2px solid #ddd; background-color: #f2f2f2;">Project Title</td>
+        <td style="padding: 8px; border-bottom: 2px solid #ddd; background-color: #ffffff;">{{ x.project_title }}</td>
+    </tr>
+    <tr>
+        <td style="padding: 8px; text-align: left; font-weight: bold; background-color: #ffffff;">PPT Link</td>
+        <td style="padding: 8px; background-color: #f2f2f2;"><a href="{{ x.ppt_link }}" target="_blank" style="color: blue; text-decoration: none;">{{ x.ppt_link }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+    <br>
+
+    
+    <div class="row">
+        <div class="column">
+            <div class="container" style="background:white">
+                <form action="submit_review1" method="POST">
+                    {% csrf_token %}
+                    <center><h2>Review 1</h2></center>
+                    <label for="team_id_1">Team ID:</label>
+                    <input type="text" id="team_id_1" name="team_id_1" required>
+                    <label for="review1_date">1st Review Date:</label>
+                    <input type="text" id="review1_date" name="review1_date" required>
+                    <label for="percentage1">Percentage Completed:</label>
+                    <input type="text" id="percentage1" name="percentage1" required>
+                    <label for="grade1">Grade:</label>
+                    <input type="text" id="grade1" name="grade1" required>
+                    <label for="remarks1">Remarks:</label>
+                    <input type="text" id="remarks1" name="remarks1" required>
+                    <button type="submit" name="submit_review1" value="submit_review1">Submit Review 1</button>
+                </form>
+            </div>
+        </div>
+        <div class="column">
+            <div class="container" style="background:white">
+                <form action="submit_review2" method="POST">
+                    {% csrf_token %}
+                    <center><h2>Review 2</h2></center>
+                    <label for="team_id_2">Team ID:</label>
+                    <input type="text" id="team_id_2" name="team_id_2" required>
+                    <label for="review2_date">Review Date:</label>
+                    <input type="text" id="review2_date" name="review2_date" required>
+                    <label for="percentage2">Percentage Completed:</label>
+                    <input type="text" id="percentage2" name="percentage2" required>
+                    <label for="grade2">Grade:</label>
+                    <input type="text" id="grade2" name="grade2" required>
+                    <label for="remarks2">Remarks:</label>
+                    <input type="text" id="remarks2" name="remarks2" required>
+                    <button type="submit" name="submit_review2" value="submit_review2">Submit Review 2</button>
+                </form>
+            </div>
+        </div>
+        <div class="column">
+            <div class="container" style="background:white">
+                <form action="submit_review3" method="POST">
+                    {% csrf_token %}
+                    <center><h2>Review 3</h2></center>
+                    <label for="team_id_3">Team ID:</label>
+                    <input type="text" id="team_id_3" name="team_id_3" required>
+                    <label for="review3_date">Review Date:</label>
+                    <input type="text" id="review3_date" name="review3_date" required>
+                    <label for="percentage3">Percentage Completed:</label>
+                    <input type="text" id="percentage3" name="percentage3" required>
+                    <label for="grade3">Grade:</label>
+                    <input type="text" id="grade3" name="grade3" required>
+                    <label for="remarks3">Remarks:</label>
+                    <input type="text" id="remarks3" name="remarks3" required>
+                    <button type="submit" name="submit_review3" value="submit_review3">Submit Review 3</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

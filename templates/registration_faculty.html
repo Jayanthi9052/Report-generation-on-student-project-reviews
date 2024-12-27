@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty_Registration Page</title>
+    <style>
+         body {
+            background-image: url("static/images/regbg1.jpg");
+            background-size: cover;
+            background-position: center;
+        }   
+        
+        nav {
+            background-color: #65818b;
+            overflow: hidden;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            background-color: #485b66;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            background-color: #65818b;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #485b66;
+        }
+        
+        .message {
+            color: red;
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+            display: none; /* Initially hidden */
+        }
+        nav .registration_faculty {
+            background-color: white;
+            color: #65818b;
+        }
+        .tick-mark {
+            color: green;
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
+        /* Dropdown Menu CSS */
+        .dropdown {
+            float: right;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form id="f1" action="registration_faculty" method="POST">  
+        {% csrf_token %}
+        <nav>
+            <div class="menu">
+                <a class="registration_faculty" href="{% url 'registration_stu' %}">Register</a>
+                <a href="{% url 'login_fac' %}">Login</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Reports</button>
+                    <div class="dropdown-content">
+                        
+                        <a href="{% url 'final_report_fac' %}">Download report</a>
+                        <!-- Add other report links here if needed -->
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <center><h2>Registration</h2></center>
+            <form action="register_process.php" method="post" onsubmit="return validateForm()">
+                <div class="message" id="errorMessage"></div>
+                <label for="team_id">Team_Id:</label>
+                <input type="text" id="team_id" name="team_id" required>
+                <label for="Date_1streview">1st review date:</label>
+                <input type="text" id="Date_1streview" name="Date_1streview" required>
+                <label for="first_review_grade">First_Review Grade:</label>
+                <input type="text" id="first_review_grade" name="first_review_grade" required>
+                <label for="per_first_completed">1st review % completed:</label>
+                <input type="text" id="per_first_completed" name="per_first_completed" required>
+                <label for="Date_2ndreview">2nd review date:</label>
+                <input type="text" id="Date_2ndreview" name="Date_2ndreview" required>
+                <label for="second_review_grade">second_Review Grade:</label>
+                <input type="text" id="second_review_grade" name="second_review_grade" required>
+                <label for="per_sec_completed">2st review % completed:</label>
+                <input type="text" id="per_sec_completed" name="per_sec_completed" required>
+                <label for="overall_status">overall_status:</label>
+                <input type="text" id="overall_status" name="overall_status" required>
+                <input type="submit"  name="registration_faculty" value='Register' onclick="showSuccessMessage()"/>
+            </form>
+            <div class="success-message" id="successMessage">
+                <span class="tick-mark">&#10004;</span> Submitted Successfully!
+            </div>
+           
+        </div>
+
+        <script>
+            function showSuccessMessage() {
+                document.getElementById("successMessage").style.display = "block";
+                setTimeout(function() {
+                    window.location.href = "{% url 'registration_faculty' %}";
+                }, 100000000); // 20 seconds delay
+            }
+
+            function validateForm() {
+                var team_id = document.getElementById("team_id").value;
+                var Date_1streview = document.getElementById("Date_1streview").value;
+                var first_review_grade = document.getElementById("first_review_grade").value;
+                var per_first_completed = document.getElementById("per_first_completed").value;
+                var Date_2ndreview = document.getElementById("Date_2ndreview").value;
+                var second_review_grade = document.getElementById("second_review_grade").value;
+                var per_sec_completed = document.getElementById("per_sec_completed").value;
+                var overall_status= document.getElementById("overall_status").value;
+                if (team_id === "" || Date_1streview === "" || first_review_grade === "" || per_first_completed ==="" || Date_2ndreview === "" || second_review_grade === "" || per_sec_completed === "" || overall_status ===""  ) {
+                    document.getElementById("errorMessage").innerText = "Please fill out all fields.";
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </form>
+</body>
+</html>

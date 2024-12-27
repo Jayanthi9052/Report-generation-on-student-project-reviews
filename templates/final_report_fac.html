@@ -1,0 +1,210 @@
+{%load static%}
+<html>
+    <head>
+        <title>reviewinfo</title>
+        <link href="{% static 'mystyle.css' %}" rel="StyleSheet">
+        {%csrf_token%}
+    </head>
+    <style>
+        nav {
+            background-color: #65818b;
+            overflow: hidden;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            background-color: #485b66;
+        }
+        
+    
+        table,th,td{
+            border-collapse: collapse;
+        }
+        label{
+            color:red;
+            font-size: 30px;
+        }
+        nav .registration {
+            background-color: white;
+            color: #65818b;
+        }
+        .dropdown {
+            float: right;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .admin-info {
+            display: flex; /* Add flex display */
+            align-items: center; /* Center items vertically */
+        }
+
+        .student-id {
+            color: white;
+            font-weight: bold;
+        }
+    
+    
+    </style>
+    <body>
+        <form action="final_report_fac" method="POST">
+        {%csrf_token%}
+        <nav>
+            <a class="registration" href="{% url 'registration' %}">Register</a>
+            <a href="{% url 'login_fac' %}">Login</a>
+            <div class="dropdown">
+                <button class="dropbtn">Reports</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'final_report' %}">Final Report</a>
+                    <a href="{% url 'final_report_fac' %}">Entire report</a>
+                    <!-- Add other report links here if needed -->
+                </div>
+            </div>
+        </nav>
+    <table  align="center" style="width:100%">
+              
+    </table>
+    <table align="center"  >
+        <tr>
+            <td align="center">
+                <br>
+                <br>
+                    
+                    
+            </td> 
+            <td><br><br><input type="submit" id="submit" name="submit" value="GET ENTIRE REPORT" style="background-color:lightblue;font-size:25px;border-radius: 8px ;"></td>
+
+
+        </tr>
+        
+    </table>
+        <br>
+        <br>
+        <table border="2" align="center" style="width:800 ;">
+            <tr>
+                <th>
+                    team_id
+                </th>
+                <th>
+                    team_members
+                </th>
+                <th>
+                    project_title
+                </th>
+                <th>
+                    ppt_link
+                </th>
+                <th>
+                    Review1_date
+                </th>
+                <th>
+                    1-Review percentage
+                </th>
+                <th>
+                    1-Review Grade
+                </th>
+                <th>
+                    1-Review Remarks
+                </th>
+                <th>
+                    Review2-Date
+                </th>
+                <th>
+                    2-Review percentage
+                </th>
+                <th>
+                    2-Review Grade
+                </th>
+                <th>
+                    2-Review Remarks
+                </th>
+                <th>
+                    Review3-Date
+                </th>
+                <th>
+                    3-Review Percentage
+                </th>
+                <th>
+                    3-Review Grade
+                </th>
+                <th>
+                    3-Review Remarks
+                </th>
+            </tr>
+            {%for x in freports%}
+            <tr>
+                <td>{{x.team_id}}</td>
+                <td>{{x.team_members}}</td>
+                <td>{{x.project_title}}</td>
+                <td><a href="{{ x.ppt_link }}" target="_blank">{{ x.ppt_link }}</a></td>
+                <td>{{x.Date_1st_review}}</td>
+                <td>{{x.first_review_grade}}</td>
+                <td>{{x.per_fir_completed}}</td>
+                <td>{{x.remarks1}}</td>
+                <td>{{x.Date_2nd_review}}</td>
+                <td>{{x.second_review_grade}}</td>
+                <td>{{x.per_sec_completed}}</td>
+                <td>{{x.remarks2}}</td>
+                <td>{{x.Date_3nd_review}}</td>
+                <td>{{x.third_review_grade}}</td>
+                <td>{{x.per_thr_completed}}</td>
+                <td>{{x.remarks3}}</td>
+            </tr>        
+            {%endfor%}
+            
+        </table>
+
+    </td> 
+    </tr>
+    <tr>
+        <td cospan="2">
+            
+        </td>
+    </tr>
+        </tr>
+    </table>
+    </form>
+    </body>
+</html>

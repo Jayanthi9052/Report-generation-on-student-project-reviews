@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>        
+        nav {
+            background-color: #65818b;
+            overflow: hidden;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            background-color: #485b66;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            background-color: #65818b;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #485b66;
+        }
+        
+        .message {
+            color: rgb(140, 0, 255);
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+
+        }
+        form {
+            max-width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #65818b;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #485b66;
+            color: white;
+        }
+
+        form button:hover {
+            background-color: #3a4750;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p a {
+            color: white;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+        nav .login {
+        background-color: white;
+        color: #65818b;
+    }
+    .background-image {
+            position: absolute;
+            top: 7px; /* Adjust top position as needed */
+            left: 190px; /* Adjust left position as needed */
+            width: 150px; /* Adjust width as needed */
+            z-index: -1; /* Ensure the image is behind the container */
+        }
+          
+        
+    </style>
+</head>
+<body>
+
+
+<br><br><br>
+<div class="container">
+    <center><h2>Login</h2></center>
+    <form action="login_stu" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div class="message" id="errorMessage"></div>
+        <label>Student_Id:</label>
+        <input type="text" placeholder="Enter student_id" id="student_id" name="student_id" required>
+        <label>Password:</label>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
+        <button type="submit" id="login" name="login" value="login">Login</button>
+    </form>
+    <p> <a href="http://127.0.0.1:8000/login_fac"><center><h4><u>Faculty Login</u></h4></center></a></p>
+    <center><h3 style="color: rgb(248, 33, 33);">{{status}}</h3></center>
+</div>
+<img src="{% static 'images/bg6.jpg' %}" alt="Background Image" class="background-image">
+<script>
+    function validateForm() {
+        var student_id = document.getElementById("student_id").value;
+        var password = document.getElementById("password").value;
+        if (student_id === "" || password === "") {
+            document.getElementById("errorMessage").innerText = "Please fill out all fields.";
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>

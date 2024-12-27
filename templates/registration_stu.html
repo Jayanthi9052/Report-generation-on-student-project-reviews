@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        
+        nav {
+            background-color: #65818b;
+            overflow: hidden;
+        }
+        
+        nav a {
+            float: right;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            background-color: #485b66;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            background-color: #65818b;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #485b66;
+        }
+        
+        .message {
+            color: red;
+            margin-bottom: 10px;
+        }
+        
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+            display: none; /* Initially hidden */
+        }
+        nav .registration {
+            background-color: white;
+            color: #65818b;
+        }
+        .tick-mark {
+            color: green;
+            font-size: 24px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .dropdown {
+            float: right;
+            overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+        }
+        
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .admin-info {
+            display: flex; /* Add flex display */
+            align-items: center; /* Center items vertically */
+        }
+
+        .student-id {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="f1" action="registration_stu" method="POST">  
+        {%csrf_token%}
+
+<nav>
+    
+    <img src="{% static 'images/admin.png' %}" alt="Admin Icon" style="width: 60px; height: 40px;" >
+    <a class="registration" href="{% url 'registration_stu' %}">Register</a>
+    <a href="{% url 'login_stu' %}">Login</a>
+    <div class="dropdown">
+        <button class="dropbtn">Reports</button>
+        <div class="dropdown-content">
+            <a href="{% url 'final_report' %}">Final Report</a>
+            <!-- Add other report links here if needed -->
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <center><h2>Registration</h2></center>
+    {% if error_message %}
+    <div class="message">{{ error_message}}</div>
+    {% endif %}
+    <form action="registration_stu" method="post" onsubmit="return validateForm()">
+        <div class="message" id="errorMessage"></div>
+        <label for="team_id">Team_Id:</label>
+        <input type="text" id="team_id" name="team_id" required>
+        <label for="team_members">Team members Names:</label>
+        <input type="text" id="team_members" name="team_members" required>
+        <label for="project_title">Project Title:</label>
+        <input type="text" id="project_title" name="project_title" required><br>
+        <label for="ppt_link">ppt_link:</label>
+        <input type="text" id="ppt_link" name="ppt_link" required>
+        <input type="submit"  name="registration" value='Register' onclick="showSuccessMessage()"/>
+    </form>
+    
+    
+</div>
+
+<script>
+    function validateForm() {
+        var team_id = document.getElementById("team_id").value;
+        var team_members = document.getElementById("team_members").value;
+        var project_title = document.getElementById("project_title").value;
+        var ppt_link = document.getElementById("ppt_link").value;
+        if (team_id === "" || team_members === "" || project_title === "" || ppt_link === "") {
+            document.getElementById("errorMessage").innerText = "Please fill out all fields.";
+            return false;
+        }
+        return true;
+    }
+
+    function showSuccessMessage() {
+        var team_id = document.getElementById("team_id").value;
+        var team_members = document.getElementById("team_members").value;
+        var project_title = document.getElementById("project_title").value;
+        var ppt_link = document.getElementById("ppt_link").value;
+
+        // Check if all fields are filled
+        if (team_id === "" || team_members === "" || project_title === "" || ppt_link === "") {
+            document.getElementById("errorMessage").innerText = "Please fill out all fields.";
+            return false;
+        }
+
+        // Check if the form is valid
+        if (validateForm()) {
+            // Show success message
+            document.getElementById("successMessage").style.display = "block";
+
+            // Fade out the success message after 5 seconds
+            setTimeout(function() {
+                document.getElementById("successMessage").style.display = "none";
+            }, 5000); // 5 seconds delay
+
+            // Redirect after 5 seconds
+            setTimeout(function() {
+                window.location.href = "{% url 'registration_stu' %}";
+            }, 5000); // 5 seconds delay
+
+            // Prevent form submission
+            return false;
+        }
+    }
+</script>
+
+
+</form>
+</body>
+</html>
